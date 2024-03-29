@@ -43,6 +43,27 @@ pipeline {
                 }
             }
         }
+		stage('build') {
+            steps {
+                script {
+                    sh '''
+                    composer install --ignore-platform-reqs
+                    '''
+                }
+            }
+        }
+
+        stage('PHPUnit Tests') {
+            steps {
+                // Run PHPUnit tests
+                sh 'php artisan test'
+            }
+        }
+        stage('Approval') {
+            steps {
+                input "Do you approve this build?"
+            }
+        }
         stage('Deploy') {
             steps {
                 script {
