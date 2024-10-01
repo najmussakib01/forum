@@ -68,7 +68,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    ssh ${SSH_USER}@${DEPLOY_SERVER} 'mkdir -p /var/www/html/forum && sudo chown -R deploy. /var/www/html/forum'
+                    ssh ${SSH_USER}@${DEPLOY_SERVER} 'sudo mkdir -p /var/www/html/forum && sudo chown -R deploy. /var/www/html/forum'
                     rsync -avhP -e "ssh -o StrictHostKeyChecking=no" --exclude '.git/' . ${SSH_USER}@${DEPLOY_SERVER}:/var/www/html/forum
                     ssh ${SSH_USER}@${DEPLOY_SERVER} <<'EOF'
                     sudo chown -R www-data. /var/www/html/forum
